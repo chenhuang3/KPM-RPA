@@ -19,5 +19,5 @@ get_eigen_min_two_systems.py:
 Obtain the lowest eigenvalues of sqrt(vc)\chi_{KS}sqrt(vc) of system 1 and system 2
    
 get_exact_ERPA.py: 
-Obtain the N lowest eigenvalues of sqrt(vc)\chi_{KS}sqrt(vc) of system 1 and system 2, and compute RPA energy.
+Obtain the N lowest eigenvalues of sqrt(vc)\chi_{KS}sqrt(vc), and compute RPA energy.
    
