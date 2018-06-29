@@ -1,10 +1,15 @@
 How to get exact exchange (EXX) energy?
 =======================================
-Here is a sample input file for this. 
+
+Our KPM-RPA code provides us the RPA correlation energy E_RPA. To get the total energy of the systems, 
+we still need other energy components, e.g., Kohn-Sham kinetic energy, Hartree energy, exact-exchange (EXX) energy, and
+external energy. How to get them? Here is the reciept which works with ABINIT v8.8.2.
+
+
+Following is a sample input file for getting these energy terms.
 
 Step 1: perform self-consistent PBE calculation
 Step 2: perform non-self-consistent Hartree-Fock calculation
-
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~ ABINIT INPUT FILE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
