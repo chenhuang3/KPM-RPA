@@ -1,9 +1,11 @@
 How to get exact exchange (EXX) energy?
 =======================================
 
-Our KPM-RPA code provides us the RPA correlation energy E_RPA. To get the total energy of the systems, 
-we still need other energy components, e.g., Kohn-Sham kinetic energy, Hartree energy, exact-exchange (EXX) energy, and
-external energy. How to get them? Here is the reciept which works with ABINIT v8.8.2.
+Our KPM-RPA code provides us the RPA correlation energy E_RPA. 
+To get the total energy of the systems, we still need other energy 
+components, e.g., Kohn-Sham kinetic energy, Hartree energy, 
+exact-exchange (EXX) energy, and external energy. How to get them? 
+Here is the reciept which works with ABINIT v8.8.2.
 
 
 Following is a sample input file for getting these energy terms.
@@ -11,53 +13,9 @@ Following is a sample input file for getting these energy terms.
 Step 1: perform self-consistent PBE calculation
 Step 2: perform non-self-consistent Hartree-Fock calculation
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~ ABINIT INPUT FILE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Simulation parameters
-nsym 1
-ixc  11  
-istwfk 1
-
-ndtset 2   # two jobs  
-
-ecut  200 eV
-acell 15.0 8.0 8.0 angstrom
-rprim
-1.0 0.0 0.0 
-0.0 1.0 0.0 
-0.0 0.0 1.0 
-
-# K-points
-ngkpt  1  1  1
-nshiftk 1 
-shiftk
-0 0 0 
-occopt 3
-tsmear 0.01 eV
-
-# System description
-ntypat 1            
-znucl  4
-natom  2
-typat  1 1 
-
-xangst
-  6.0   4.0   4.0   # Be atom #1
-  8.0   4.0   4.0   # Be atom #2
-
-prtwf   1    # output wave function for restarting 
-prtden  1    # output electron density for restarting 
-nband   10
-nstep   100 
-toldfe  1.0d-5
-iscf    7   
 
 
-getden2 -1      # get density from PBE calculations
-getwfk2 -1      # get wave functions from PBE calculations 
-tolwfr2  1e-20  # refine the wave functions, typical around 1e-20 
-iscf2   -3      # restart a non-self-consistent calculation
-ixc2    40      # Hartree-Fock exchange only (no correlation)
+
+
 
 
