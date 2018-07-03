@@ -16,7 +16,7 @@ A sample job
 nsym 1
 istwfk 1
 
-eut  400 eV
+ecut  400 eV
 acell 10.0 8.0 8.0 angstrom
 rprim
 1.0 0.0 0.0 
