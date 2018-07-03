@@ -20,7 +20,7 @@ sys_dir = './'#raw_input("\nEnter the system folder in which we read the lowest 
 
 
 # get number of freq 
-cmd = "cat  "+sys_dir+"/rpa_kpm.ini  | head -n 5 | tail -n 1 | awk '{print $1}'"
+cmd = "cat  "+sys_dir+"/rpa_kpm.ini  | head -n 7 | tail -n 1 | awk '{print $1}'"
 retval = os.popen( cmd ).read().rstrip('\r\n')
 nfreq = int(retval)
 
