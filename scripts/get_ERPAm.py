@@ -87,7 +87,7 @@ print ""
 print "\nget C coefficients\n"
 for i in range(nfreq):
     # system 1
-    cmdFreq1 = "grep \"c coeff:\"  system1_kpm_1/kpm.log."+str(i)
+    cmdFreq1 = "grep \"c coeff:\"  "+dir1+"_1/kpm.log."+str(i)
     retstrF1 = os.popen( cmdFreq1 ).read().rstrip('\r\n')
     rsF1 = retstrF1.split('\n')
     #print('rsF1 = ', rsF1)
@@ -147,7 +147,7 @@ for r in range(nRun):
     #print 'min2 = ', minRandomVec2
 
     minRandomVec[r] = min(minRandomVec1, minRandomVec2)
-    print 'Run ID:',r+1,' =>  min number of random vectors: ', int(minRandomVec[r])
+    print 'run #',r+1,' =>  min number of random vectors: ', int(minRandomVec[r])
 
 
 totRandomVec = int(sum(minRandomVec))
@@ -180,8 +180,8 @@ for i in range(nfreq):
 
             # get the sampling for this moment 
             key = "moment #  {:4d}:".format(m) 
-            cmd1 = "grep '"+key+"'   system1_kpm_"+str(r+1)+"/kpm.log."+str(i)+" | awk '{print $8}'"
-            cmd2 = "grep '"+key+"'   system2_kpm_"+str(r+1)+"/kpm.log."+str(i)+" | awk '{print $8}'"
+            cmd1 = "grep '"+key+"'   "+dir1+"_"+str(r+1)+"/kpm.log."+str(i)+" | awk '{print $8}'"
+            cmd2 = "grep '"+key+"'   "+dir2+"_"+str(r+1)+"/kpm.log."+str(i)+" | awk '{print $8}'"
             #print cmd
             retval1 = os.popen(cmd1).read().rstrip('\r\n')
             retval2 = os.popen(cmd2).read().rstrip('\r\n')
