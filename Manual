@@ -1,14 +1,14 @@
 Overview 
 ========
 
-RPA program runs in three modes so far. The input file is rpa_kpm.ini
+RPA program runs in three modes so far. The input file is rpa_kpm.ini. The three modes are
 1)  eig_min  
 2)  eig_all
 3)  kpm
 
 eig_min: compute the lowest eigenvalue of sqrt(vc)\chi_{KS}sqrt(vc)
-eig_all:  compute N lowest eigenvalues of sqrt(vc)\chi_{KS}sqrt(vc)
-kpm:      do the KPM sampling
+eig_all: compute N lowest eigenvalues of sqrt(vc)\chi_{KS}sqrt(vc)  [PRB, 79, 205114 (2009)]
+kpm:     perform the KPM sampling
 
 
 
