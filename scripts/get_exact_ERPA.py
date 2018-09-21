@@ -1,22 +1,17 @@
 #!/usr/bin/python
 
 
-###################################################################
-#
-#  How to use? 
-#  get_ERPAs_v3  <root_dir_of_system>  <nRuns>   <nMoments>
-#
-###################################################################
 
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# collect RPA energies for each freq. and compute the total RPA energy
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import re
 import sys
 import os
 import numpy as np
 from subprocess import call
 from array import *
-
-
-
 
 #>>>>>>>>>>>>>>>>>>>> main function begins <<<<<<<<<<<<<<<<<<<<
 
