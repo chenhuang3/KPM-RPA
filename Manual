@@ -20,3 +20,9 @@ Obtain the N lowest eigenvalues of sqrt(vc)\chi_{KS}sqrt(vc), and compute RPA en
    
 get_ERPAm.py: 
 Get the KPM results from system 1 and system 2 to compute the RPA energy. 
+
+
+
+
+
+
