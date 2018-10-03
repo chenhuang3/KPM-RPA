@@ -125,32 +125,21 @@ for r in range(nRun):
 
     for i in range(nfreq):
         # grep the random vector from the system1_kpm
-        cmd1 = "grep \"random vector \" "+dir1+"_"+str(r+1)+"/kpm.log."+str(i)
-        retstr1 = os.popen( cmd1 ).read().rstrip('\r\n')
-        rs1 = retstr1.split()
-        rsLeng1 = len(rs1)
-        tmpRandomVec1[i] = int(rs1[rsLeng1-1])
-        #print('Random Vector 1= ', tmpRandomVec1[i])
+        cmd1 = "grep \"random vector \" "+dir1+"_"+str(r+1)+"/kpm.log."+str(i)+" | wc | awk '{print $1}'"
+        tmpRandomVec1[i] = int(os.popen( cmd1 ).read())-1
 
         # grep the random vector from the system2_kpm
-        cmd2 = "grep \"random vector \" "+dir2+"_"+str(r+1)+"/kpm.log."+str(i)
-        retstr2 = os.popen( cmd2 ).read().rstrip('\r\n')
-        rs2 = retstr2.split()
-        rsLeng2 = len(rs2)
-        tmpRandomVec2[i] = int(rs2[rsLeng2-1])
-        #print('Random Vector 2= ', tmpRandomVec2[i])
+        cmd2 = "grep \"random vector \" "+dir2+"_"+str(r+1)+"/kpm.log."+str(i)+" | wc | awk '{print $1}'"
+        tmpRandomVec2[i] = int(os.popen( cmd2 ).read())-1
 
-    #print('weight = ', weight)
-    minRandomVec1 = int(min(tmpRandomVec1))-1
-    #print 'min1 = ', minRandomVec1
-    minRandomVec2 = int(min(tmpRandomVec2))-1
-    #print 'min2 = ', minRandomVec2
-
+    minRandomVec1 = int(min(tmpRandomVec1))
+    minRandomVec2 = int(min(tmpRandomVec2))
     minRandomVec[r] = min(minRandomVec1, minRandomVec2)
+
     print 'run #',r+1,' =>  min number of random vectors: ', int(minRandomVec[r])
 
 
-totRandomVec = int(sum(minRandomVec))
+totRandomVec = int(np.sum(minRandomVec))
 print '\nTotal number of random vector: ',totRandomVec
 
 
@@ -255,8 +244,8 @@ for nRV in range(totRandomVec):
             #   the key point to remember is that the :end value represents 
             #   the first value that is not in the selected slice
 
-            mu1_avg = sum(mo1[i][m][0:nRV+1])/(nRV+1);
-            mu2_avg = sum(mo2[i][m][0:nRV+1])/(nRV+1);
+            mu1_avg = np.sum(mo1[i][m][0:nRV+1])/(nRV+1);
+            mu2_avg = np.sum(mo2[i][m][0:nRV+1])/(nRV+1);
             #print "m:",m,"  mu1_avg: ",mu1_avg,"  gn:",gn[m],"  c:",C_coeff[i][m]
             
             if m==0: 
@@ -292,13 +281,11 @@ rpaE2_m = np.zeros(nMoment)  # RPA energy w.r.t. moments
 mu1_avg = np.zeros((nfreq,nMoment))
 mu2_avg = np.zeros((nfreq,nMoment))
 
-nRV_moment = totRandomVec-1;    
-
 # compute averaged moments for all freq
 for i in range(nfreq): 
   for m in range(nMoment): 
-     mu1_avg[i][m] = sum(mo1[i][m][0:nRV_moment+1])/(nRV_moment+1);
-     mu2_avg[i][m] = sum(mo2[i][m][0:nRV_moment+1])/(nRV_moment+1);
+     mu1_avg[i][m] = np.sum(mo1[i][m][:])/totRandomVec;
+     mu2_avg[i][m] = np.sum(mo2[i][m][:])/totRandomVec;
 
 
 for i in range(nfreq): 
@@ -351,7 +338,7 @@ for j in range(totRandomVec):
 file = open("ERPA_vs_moments.txt",'w') 
 ss = "#   nMoment        E_RPA1        E_RPA2      E_RPA1-E_RPA2 (Ha)     E_RPA1-E_RPA2 (eV) "
 file.write(ss+"\n")
-print "\n\n\n>>> RPA energy vs moments (with ",nRV_moment," random vectors) <<<\n"
+print "\n\n\n>>> RPA energy vs moments (with ",totRandomVec," random vectors) <<<\n"
 print "  nMoment        E_RPA1        E_RPA2      E_RPA1-E_RPA2 (Ha)     E_RPA1-E_RPA2 (eV)"
 print "--------------------------------------------------------------------------------------"
 for j in range(mMax): 
@@ -380,9 +367,9 @@ print "Integrated over freq:   %12.5f    %12.5f    %12.5f  (Ha)  %9.5f (eV)" % \
        np.dot(rpaE1_f-rpaE2_f,weight)*hartree2ev)
 
 
-print "\n\n>>> Output files <<<"
-print "\n ERPA_vs_random_vectors.txt   <= RPA energy versus number of random vectors"
-print "\n ERPA_vs_moments.txt          <= RPA energy versus number of moments"
+print "\n\n>>> Output files <<<\n"
+print "ERPA_vs_random_vectors.txt   <= RPA energy versus number of random vectors"
+print "ERPA_vs_moments.txt          <= RPA energy versus number of moments"
 
 
 print ""
