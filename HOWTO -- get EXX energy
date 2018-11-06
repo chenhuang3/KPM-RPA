@@ -1,6 +1,5 @@
 How to get exact exchange (EXX) energy?
 =======================================
-
 Our KPM-RPA code provides us the RPA correlation energy E_RPA. 
 To get the total energy of the systems, we still need other energy 
 components, e.g., Kohn-Sham kinetic energy, Hartree energy, 
@@ -10,7 +9,6 @@ exact-exchange (EXX) energy, and external energy. How to get them?
 
 A sample job
 ============
-
 ------------  ABINIT INPUT FILE  ----------------
 # Simulation parameters
 nsym 1
@@ -36,14 +34,11 @@ ntypat 1
 znucl  7
 natom  2
 typat 1 1 
-
 xangst
   5.0   4.000   4.000
   6.1   4.0     4.0
-
 nband  10
 nbdbuf 2
-
 nstep   100
 toldfe  1.0d-5
 iscf  17
@@ -52,7 +47,6 @@ iscf  17
 
 This program needs the rpa_kpm.ini file in which we type "exx" in 
 the first line to inform the program to compute EXX energy.
-
 ----------------------- rpa_kpm.ini file ----------------------------
 exx            ! eig_min: compute eigenvalues, eig_all: compute neig eigenvalues, kpm: compute RPA energy
 123            ! rand_seed 
@@ -86,11 +80,8 @@ manual
 
 
 Run this ABINIT input file with our modified ABINIT program which is located here
-
 /gpfs/home/chuang3/codes/abinit_KPM_RPA/abinit-7.10.4_kpm/src/98_main/abinit
-
 Run the job with 1 CPU. The sample job.s file is given 
-
 ---------------- Job.s file --------------------------
 #!/bin/bash
 #SBATCH -J "EXX_job"
@@ -100,10 +91,8 @@ Run the job with 1 CPU. The sample job.s file is given
 #SBATCH --time=4:00:00
 #SBATCH -o output-%J-%a.o
 #SBATCH -e output-%J-%a.e
-
 module purge 
 module load gnu-openmpi
-
 ulimit -s unlimited
 cd $SLURM_SUBMIT_DIR/
 srun /gpfs/home/chuang3/codes/abinit_KPM_RPA/abinit-7.10.4_kpm-just-compute-exx/src/98_main/abinit  < g.files >log &
@@ -116,7 +105,6 @@ wait
 
 Results & Outputs
 =================
-
 Check your results in kpm.log.0 file, in which we have the system XC energy 
 (using other low-level, fast XC functionals) and EXX energy. 
 "Etotal - XC + EXX" gives the energy to be added with RPA correlation energy 
@@ -124,7 +112,6 @@ to obtain the total energy.
 
 -------------------------------------------------------------------------------
 Solving KS-DFT in scfcv()...
-
 iter:   1   after vtorho() => etotal:     -19.58123552  e(1):   -1.054444
 iter:   2   after vtorho() => etotal:     -19.64660131  e(1):   -1.008939
 iter:   3   after vtorho() => etotal:     -19.64488608  e(1):   -1.040728
