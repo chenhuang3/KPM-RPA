@@ -50,7 +50,14 @@ nMoment = int(retval)
 print '\nnumber of freq:    ',nfreq
 print   'number of runs:    ',nRun
 print   'number of moments: ',nMoment,' [mu_0, ...,  mu_'+str(nMoment-1)+"]"
-raw_input("\nAll above are correct? \n\nPress Enter to continue ...")
+
+ifreq = raw_input("\nGive the freq index to work on, e.g., 0, 1, 2, ... [press Enter for default -- all frequencies] \n") or nfreq
+ifreq = int(ifreq)
+if ifreq == nfreq: 
+   all_freq = True 
+else: 
+   all_freq = False
+print "all_freq: ",all_freq
 
 
 weight  = np.zeros(nfreq)
@@ -63,7 +70,6 @@ gn      = np.zeros(nMoment)   # Kernel Jackson
 #***********************************
 # get freq_weight  
 #***********************************
-
 print "\n\nget freq_weight ...\n"
 # grep the freq_weight
 cmdWeight = "grep freq_weight: "+dir1+"_"+str(1)+"/kpm.log.0"
@@ -154,7 +160,9 @@ mo1 = np.zeros((nfreq,nMoment,totRandomVec))
 mo2 = np.zeros((nfreq,nMoment,totRandomVec))
 
 for i in range(nfreq):
-    
+   
+    if all_freq == False and i!=ifreq: continue
+           
     # show status 
     pt = float(i/float(nfreq-1)*100);
     print  "\rfinished %4.1f%%" % pt,
@@ -221,15 +229,18 @@ for nRV in range(totRandomVec):
 ##for nRV in range(totRandomVec-1,totRandomVec): 
 
     # show status 
-    pt = float(nRV/float(totRandomVec-1)*100);
-    print  "\rfinished %6.1f%%" % pt,
-    sys.stdout.flush()
-
+    if totRandomVec-1>0:
+        pt = float(nRV/float(totRandomVec-1)*100);
+        print  "\rfinished %6.1f%%" % pt,
+        sys.stdout.flush()
 
     eRPA1 = 0.0
     eRPA2 = 0.0
 
     for i in range(nfreq):
+
+        if all_freq == False and i!=ifreq: continue
+
         eRPA1_f = 0.0;
         eRPA2_f = 0.0;
 
@@ -317,7 +328,10 @@ print "********************************\n"
 
 
 
-file = open("ERPA_vs_random_vectors.txt",'w') 
+if all_freq == False: 
+   file = open("ERPA_vs_random_vectors.txt",'w')
+else:
+   file = open("ERPA_vs_random_vectors_freq"+str(ifreq)+".txt",'w') 
 print "\n\n\n>>> RPA energy vs number of random vectors (nMoment: ",nMoment,")\n"
 ss = " nRV          E1           E2          E1-E2 (Ha)   E1-E2 (eV) "
 file.write("# "+ss+"\n")
@@ -333,9 +347,10 @@ for j in range(totRandomVec):
 
 
 
-
-
-file = open("ERPA_vs_moments.txt",'w') 
+if all_freq==False: 
+   file = open("ERPA_vs_moments.txt",'w') 
+else: 
+   file = open("ERPA_vs_moments_freq"+str(ifreq)+".txt",'w') 
 ss = "#   nMoment        E_RPA1        E_RPA2      E_RPA1-E_RPA2 (Ha)     E_RPA1-E_RPA2 (eV) "
 file.write(ss+"\n")
 print "\n\n\n>>> RPA energy vs moments (with ",totRandomVec," random vectors) <<<\n"
@@ -351,17 +366,22 @@ for j in range(mMax):
 
 
 
+for write_pass in range(2): 
+   if write_pass==1: 
+       if all_freq==False: 
+         sys.stdout = open("ERPA_summary.txt", 'w')
+       else: 
+         sys.stdout = open("ERPA_summary_freq"+str(ifreq)+".txt", 'w')
 
-
-print "\n\n\n>>> RPA energy vs freq <<< \n"
-print "RPA energy is calculated with moments: mu_0, mu_1, ..., mu_"+str(nMoment-1)," (with "+str(totRandomVec)+" random vectors)\n"
-print "  index         u        E_RPA_1(u)      E_RPA_2(u)        delta_E_RPA(u)"
-print "---------------------------------------------------------------------"
-for i in range(nfreq): 
-     print "%4d    %12.5f    %12.5f    %12.5f    %12.5f" %  \
-        (i,freq[i],rpaE1_f[i],rpaE2_f[i],rpaE1_f[i]-rpaE2_f[i])
-print "---------------------------------------------------------------------"
-print "Integrated over freq:   %12.5f    %12.5f    %12.5f  (Ha)  %9.5f (eV)" % \
+   print "\n\n\n>>> RPA energy vs freq <<< \n"
+   print "RPA energy is calculated with moments: mu_0, mu_1, ..., mu_"+str(nMoment-1)," (with "+str(totRandomVec)+" random vectors)\n"
+   print "  index         u        weight         E_RPA_1(u)      E_RPA_2(u)      delta_E_RPA(u)"
+   print "---------------------------------------------------------------------"
+   for i in range(nfreq): 
+        print "%4d    %12.5f   %12.5e   %12.5f    %12.5f    %12.5f" %  \
+          (i,freq[i],weight[i],rpaE1_f[i],rpaE2_f[i],rpaE1_f[i]-rpaE2_f[i])
+   print "---------------------------------------------------------------------"
+   print "Integrated over freq:                   %12.5f    %12.5f    %12.5f  (Ha)  %9.5f (eV)" % \
       (np.dot(rpaE1_f,weight),np.dot(rpaE2_f,weight), 
        np.dot(rpaE1_f-rpaE2_f,weight),
        np.dot(rpaE1_f-rpaE2_f,weight)*hartree2ev)
@@ -375,8 +395,3 @@ print "ERPA_vs_moments.txt          <= RPA energy versus number of moments"
 print ""
 print ""
 print ""
-
-
-
-
-
