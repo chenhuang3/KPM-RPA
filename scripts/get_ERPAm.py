@@ -328,7 +328,7 @@ print "********************************\n"
 
 
 
-if all_freq == False: 
+if all_freq == True: 
    file = open("ERPA_vs_random_vectors.txt",'w')
 else:
    file = open("ERPA_vs_random_vectors_freq"+str(ifreq)+".txt",'w') 
@@ -347,7 +347,7 @@ for j in range(totRandomVec):
 
 
 
-if all_freq==False: 
+if all_freq==True: 
    file = open("ERPA_vs_moments.txt",'w') 
 else: 
    file = open("ERPA_vs_moments_freq"+str(ifreq)+".txt",'w') 
