@@ -368,7 +368,7 @@ for j in range(mMax):
 
 for write_pass in range(2): 
    if write_pass==1: 
-       if all_freq==False: 
+       if all_freq==True: 
          sys.stdout = open("ERPA_summary.txt", 'w')
        else: 
          sys.stdout = open("ERPA_summary_freq"+str(ifreq)+".txt", 'w')
