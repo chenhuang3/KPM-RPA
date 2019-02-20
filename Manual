@@ -9,6 +9,40 @@ RPA program runs in three modes so far. The input file is rpa_kpm.ini. The three
 4)  exx      => compute EXX energy 
 
 
+
+A sample of input file:
+eig_min        ! eig_min: compute eigenvalues, eig_all: compute neig eigenvalues, kpm: compute RPA energy
+1e-3           ! freq shift 
+111            ! rand_seed 
+200            ! number of moments 
+1500           ! number of random vectors 
+105            ! number of eigenvalues to compute
+5              ! eig_buffer 
+16             ! number of freq
+10.0           ! max freq 
+manual 
+-2.20232129
+-2.20231181
+-2.20196556
+-2.1979477
+-2.17306485
+-2.08110286
+-1.90107217
+-1.70808068
+-1.50647606
+-1.24443293
+-0.92865
+-0.63619406
+-0.38251834
+-0.20910523
+-0.09475994
+-0.02690885
+
+
+
+
+
+
 Description of the scripts
 ==========================
 
