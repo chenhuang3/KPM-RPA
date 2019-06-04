@@ -34,12 +34,12 @@ dir2 = dir2.strip()
 print "\nget other parameters from "+dir1+"_1/rpa_kpm.ini ..."
 
 # get number of freq 
-cmd = "cat  "+dir1+"_1/rpa_kpm.ini  | head -n 7 | tail -n 1 | awk '{print $1}'"
+cmd = "cat  "+dir1+"_1/rpa_kpm.ini  | head -n 8 | tail -n 1 | awk '{print $1}'"
 retval = os.popen( cmd ).read().rstrip('\r\n')
 nfreq = int(retval)
 
 
-cmd = "cat  "+dir1+"_1/rpa_kpm.ini  | head -n 3 | tail -n 1 | awk '{print $1}'"
+cmd = "cat  "+dir1+"_1/rpa_kpm.ini  | head -n 4 | tail -n 1 | awk '{print $1}'"
 retval = os.popen( cmd ).read().rstrip('\r\n')
 nMoment = int(retval)
 
