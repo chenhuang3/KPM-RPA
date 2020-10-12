@@ -6,9 +6,15 @@ components, e.g., Kohn-Sham kinetic energy, Hartree energy,
 exact-exchange (EXX) energy, and external energy. How to get them? 
 
 
+Path to the code 
+================
+/gpfs/home/chuang3/codes/abinit_KPM_RPA/abinit-7.10.4_kpm-just-compute-exx
+
+
 
 A sample job
 ============
+
 ------------  ABINIT INPUT FILE  ----------------
 # Simulation parameters
 nsym 1
@@ -42,11 +48,14 @@ nbdbuf 2
 nstep   100
 toldfe  1.0d-5
 iscf  17
-------------------- END OF ABINIT FILE -----------------------
+------------------- END OF ABINIT INPUT FILE -----------------------
+
+
+
 
 
 This program needs the rpa_kpm.ini file in which we type "exx" in 
-the first line to inform the program to compute EXX energy.
+the first line to let the program run EXX energy.
 ----------------------- rpa_kpm.ini file ----------------------------
 exx            ! eig_min: compute eigenvalues, eig_all: compute neig eigenvalues, kpm: compute RPA energy
 123            ! rand_seed 
@@ -105,6 +114,7 @@ wait
 
 Results & Outputs
 =================
+
 Check your results in kpm.log.0 file, in which we have the system XC energy 
 (using other low-level, fast XC functionals) and EXX energy. 
 "Etotal - XC + EXX" gives the energy to be added with RPA correlation energy 
